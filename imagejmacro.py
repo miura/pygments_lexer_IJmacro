@@ -57,7 +57,8 @@ class ImageJMacroLexer(RegexLexer):
             (r'\n', Text, '#pop')
         ],
         'root': [
-            (r'\A#! ?/.*?\n', Comment.Hashbang),  # recognized by node.js
+            #(r'\A#! ?/.*?\n', Comment.Hashbang),  # recognized by node.js
+            (r'\A#\s?@.*?\n', Comment.Preproc),  # recognized by script parameter parser
             (r'^(?=\s|/|<!--)', Text, 'slashstartsregex'),
             include('commentsandwhitespace'),
             (r'(\.\d+|[0-9]+\.[0-9]*)([eE][-+]?[0-9]+)?', Number.Float),

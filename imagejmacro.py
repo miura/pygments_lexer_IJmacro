@@ -43,23 +43,25 @@ class ImageJMacroLexer(RegexLexer):
         'commentsandwhitespace': [
             (r'\s+', Text),
             (r'<!--', Comment),
-            (r'//.*?\n', Comment.Single),
-            (r'/\*.*?\*/', Comment.Multiline)
+            (r'\/\/.*?\n', Comment.Single),
+            (r'\/\*.*?\*\/', Comment.Multiline)
         ],
         'slashstartsregex': [
             include('commentsandwhitespace'),
-            (r'/(\\.|[^[/\\\n]|\[(\\.|[^\]\\\n])*])+/'
-             r'([gimuy]+\b|\B)', String.Regex, '#pop'),
-            (r'(?=/)', Text, ('#pop', 'badregex')),
+            #ImageJ does not use slash regex. 
+            ##(r'/(\\.|[^[/\\\n]|\[(\\.|[^\]\\\n])*])+/'
+            #(r'\/(\\.|[^[\/\\\n]|\[(\\.|[^\]\\\n])*])+\/'
+             #r'([gimuy]+\b|\B)', String.Regex, '#pop'),
+            #(r'(?=\/)', Text, ('#pop', 'badregex')),
             default('#pop')
         ],
-        'badregex': [
-            (r'\n', Text, '#pop')
-        ],
+        #'badregex': [
+            #(r'\n', Text, '#pop')
+        #],
         'root': [
             #(r'\A#! ?/.*?\n', Comment.Hashbang),  # recognized by node.js
             (r'\A#\s?@.*?\n', Comment.Preproc),  # recognized by script parameter parser
-            (r'^(?=\s|/|<!--)', Text, 'slashstartsregex'),
+            (r'^(?=\s|\/|<!--)', Text, 'slashstartsregex'),
             include('commentsandwhitespace'),
             (r'(\.\d+|[0-9]+\.[0-9]*)([eE][-+]?[0-9]+)?', Number.Float),
             (r'0[bB][01]+', Number.Bin),
@@ -68,7 +70,7 @@ class ImageJMacroLexer(RegexLexer):
             (r'[0-9]+', Number.Integer),
             (r'\.\.\.|=>', Punctuation),
             (r'\+\+|--|~|&&|\?|:|\|\||\\(?=\n)|'
-             r'(<<|>>>?|==?|!=?|[-<>+*%&|^/])=?', Operator, 'slashstartsregex'),
+             r'(<<|>>>?|==?|!=?|[-<>+*%&|^\/])=?', Operator, 'slashstartsregex'),
             (r'[{(\[;,]', Punctuation, 'slashstartsregex'),
             (r'[})\].]', Punctuation),
             (r'(for|in|while|do|return|if|else)\b', Keyword, 'slashstartsregex'),

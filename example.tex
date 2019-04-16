@@ -1,0 +1,55 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{xcolor}
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+
+\usepackage{minted}
+%\usemintedstyle{vs}
+\usemintedstyle{perldoc}
+\setminted[imagejmacro.py:ImageJMacroLexer -x]{
+frame=lines,
+framesep=1mm,
+%baselinestretch=1.2,
+%bgcolor=LightGray,
+bgcolor=bg,
+%fontsize=\footnotesize,
+breaklines,
+linenos
+}
+\setmintedinline[imagejmacro.py:ImageJMacroLexer -x]{
+frame=none, 
+bgcolor=bg,
+breaklines,
+linenos=false
+}
+ 
+\begin{document}
+
+\section{IJ macro code}
+
+\begin{minted}
+%[
+%frame=lines,
+%framesep=2mm,
+%baselinestretch=1.2,
+%bgcolor=LightGray,
+%fontsize=\footnotesize,
+%linenos
+%]
+{imagejmacro.py:ImageJMacroLexer -x}
+
+print("hello world");
+\end{minted}
+
+\section{Inline code from a separate file}
+
+The code \mintinline{imagejmacro.py:ImageJMacroLexer -x}{run("Gaussian Blur...", "sigma=2");} blurrs a image by sigma=2. 
+
+
+\section{Include a code}
+
+\inputminted
+{imagejmacro.py:ImageJMacroLexer -x}{testcode.ijm}
+
+\end{document}
